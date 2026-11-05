@@ -1,0 +1,300 @@
+@import "tailwindcss";
+
+/* 亮/暗主题：通过 html.dark 切换（用户手动 + 系统偏好） */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: oklch(0.982 0.003 255);
+  --foreground: oklch(0.24 0.02 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.02 265);
+  --muted: oklch(0.958 0.006 255);
+  --muted-foreground: oklch(0.53 0.02 260);
+  --border: oklch(0.905 0.008 255);
+  --input: oklch(0.94 0.008 255);
+  --primary: oklch(0.54 0.2 275);
+  --primary-foreground: oklch(0.99 0 0);
+  --accent: oklch(0.948 0.024 275);
+  --accent-foreground: oklch(0.42 0.14 275);
+  --destructive: oklch(0.58 0.22 25);
+  --ring: oklch(0.62 0.16 275);
+  --sidebar: oklch(0.972 0.004 255);
+  --sidebar-foreground: oklch(0.3 0.02 265);
+  --success: oklch(0.62 0.15 155);
+  --warning: oklch(0.72 0.15 70);
+  --info: oklch(0.62 0.14 240);
+  --radius: 0.75rem;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+}
+
+.dark {
+  --background: oklch(0.172 0.014 265);
+  --foreground: oklch(0.94 0.006 255);
+  --card: oklch(0.213 0.017 265);
+  --card-foreground: oklch(0.94 0.006 255);
+  --muted: oklch(0.245 0.018 265);
+  --muted-foreground: oklch(0.68 0.018 255);
+  --border: oklch(0.29 0.02 265);
+  --input: oklch(0.31 0.02 265);
+  --primary: oklch(0.68 0.17 275);
+  --primary-foreground: oklch(0.16 0.02 265);
+  --accent: oklch(0.28 0.04 275);
+  --accent-foreground: oklch(0.87 0.06 275);
+  --destructive: oklch(0.64 0.2 25);
+  --ring: oklch(0.64 0.16 275);
+  --sidebar: oklch(0.192 0.016 265);
+  --sidebar-foreground: oklch(0.88 0.01 255);
+  --success: oklch(0.7 0.15 155);
+  --warning: oklch(0.78 0.15 70);
+  --info: oklch(0.7 0.13 240);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03";
+  }
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-primary) 26%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--color-muted-foreground) 28%, transparent);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in oklab, var(--color-muted-foreground) 45%, transparent);
+  }
+}
+
+@layer components {
+  /* 页面主容器 */
+  .surface {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 2px 0 rgb(15 23 42 / 0.03), 0 1px 3px 0 rgb(15 23 42 / 0.04);
+  }
+  .dark .surface {
+    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px -12px rgb(0 0 0 / 0.5);
+  }
+
+  .subtle-grid {
+    background-image:
+      radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-muted-foreground) 22%, transparent) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  /* Markdown 正文 */
+  .prose-poc {
+    color: color-mix(in oklab, var(--color-foreground) 92%, transparent);
+    font-size: 14px;
+    line-height: 1.75;
+    overflow-wrap: break-word;
+  }
+  .prose-poc > * + * {
+    margin-top: 0.85em;
+  }
+  .prose-poc h1,
+  .prose-poc h2,
+  .prose-poc h3,
+  .prose-poc h4 {
+    color: var(--color-foreground);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+  .prose-poc h1 {
+    font-size: 1.45rem;
+    margin-top: 0.2em;
+  }
+  .prose-poc h2 {
+    font-size: 1.15rem;
+    margin-top: 1.6em;
+    padding-bottom: 0.35em;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .prose-poc h3 {
+    font-size: 1rem;
+    margin-top: 1.4em;
+  }
+  .prose-poc h4 {
+    font-size: 0.92rem;
+  }
+  .prose-poc p {
+    margin-top: 0.7em;
+  }
+  .prose-poc a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-poc strong {
+    color: var(--color-foreground);
+    font-weight: 600;
+  }
+  .prose-poc ul,
+  .prose-poc ol {
+    padding-left: 1.35em;
+    margin-top: 0.7em;
+  }
+  .prose-poc ul {
+    list-style: disc;
+  }
+  .prose-poc ol {
+    list-style: decimal;
+  }
+  .prose-poc li + li {
+    margin-top: 0.3em;
+  }
+  .prose-poc li::marker {
+    color: color-mix(in oklab, var(--color-muted-foreground) 80%, transparent);
+  }
+  .prose-poc code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 0.15em 0.4em;
+    border-radius: 0.35rem;
+    background-color: var(--color-muted);
+    border: 1px solid var(--color-border);
+  }
+  .prose-poc pre {
+    font-family: var(--font-mono);
+    background-color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    overflow-x: auto;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .prose-poc pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+  }
+  .prose-poc blockquote {
+    border-left: 3px solid color-mix(in oklab, var(--color-primary) 55%, transparent);
+    padding: 0.35rem 0 0.35rem 0.9rem;
+    color: var(--color-muted-foreground);
+  }
+  .prose-poc table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 0.9em;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .prose-poc th,
+  .prose-poc td {
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose-poc th {
+    background-color: var(--color-muted);
+    font-weight: 600;
+  }
+  .prose-poc hr {
+    border-color: var(--color-border);
+    margin: 1.5em 0;
+  }
+  .prose-poc img {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  /* 代码块内滚动条细一点 */
+  .prose-poc pre::-webkit-scrollbar {
+    height: 8px;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.35s ease-out both;
+  }
+  .animate-slide-up {
+    animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
